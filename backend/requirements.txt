@@ -1,0 +1,16 @@
+langchain
+langchain-google-genai
+google-generativeai
+langgraph
+mem0ai
+pinecone-client
+pymupdf
+pikepdf
+pandas
+fastapi
+uvicorn[standard]
+python-dotenv
+apscheduler
+pydantic
+python-multipart
+clerk-backend-api
