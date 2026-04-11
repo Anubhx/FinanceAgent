@@ -49,7 +49,8 @@ export default function UploadDropzone() {
       }
     } catch (error: any) {
       setStatus("error");
-      setMessage(error.response?.data?.detail || "Upload failed. Please check the file and password.");
+      const serverError = error.response?.data?.detail;
+      setMessage(serverError || "Upload failed. Please check the file and password.");
     }
   };
 

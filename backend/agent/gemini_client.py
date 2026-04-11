@@ -3,53 +3,55 @@ import time
 from itertools import cycle
 from google import genai
 from google.genai import types
+from dotenv import load_dotenv
 
-# Load keys from environment
-keys = [
-    os.getenv("GEMINI_API_KEY_1"),
-    os.getenv("GEMINI_API_KEY_2"),
-    os.getenv("GEMINI_API_KEY_3"),
-]
-keys = [k for k in keys if k]  # filter out empty/missing keys
+# Ensure absolute path for .env loading
+current_dir = os.path.dirname(os.path.abspath(__file__))
+backend_dir = os.path.dirname(current_dir)
+env_path = os.path.join(backend_dir, ".env")
+load_dotenv(env_path)
 
-if not keys:
-    _key_cycle = cycle(["PLACEHOLDER_KEY"])
-else:
-    _key_cycle = cycle(keys)
-
-
-def _make_client() -> genai.Client:
-    """Create a new google.genai Client with the next rotated key."""
-    key = next(_key_cycle)
-    return genai.Client(api_key=key)
-
+def get_keys():
+    """Dynamically load keys from environment."""
+    keys = [
+        os.getenv("GEMINI_API_KEY_1"),
+        os.getenv("GEMINI_API_KEY_2"),
+        os.getenv("GEMINI_API_KEY_3"),
+    ]
+    return [k for k in keys if k and len(str(k)) > 10]
 
 def call_gemini(prompt: str) -> str:
     """
     Safe Gemini call using the modern google-genai SDK.
     Rotates across API keys on 429 quota errors.
-    Uses gemini-2.5-flash as requested in AGENT.md.
     """
+    keys = get_keys()
     if not keys:
-        return "Error: No Gemini API keys provided in .env."
+        return f"Error: No valid Gemini API keys found in {env_path}."
 
-    for attempt in range(len(keys)):
+    key_cycle = cycle(keys)
+
+    for _ in range(len(keys)):
+        key = next(key_cycle)
         try:
-            client = _make_client()
+            client = genai.Client(api_key=key)
+            
+            # Using gemini-2.0-flash which was verified in models.list()
             response = client.models.generate_content(
-                model="gemini-2.5-flash-preview-04-17",
+                model="gemini-flash-latest",
                 contents=prompt,
                 config=types.GenerateContentConfig(
-                    max_output_tokens=1024,
-                    temperature=0.3,
-                    thinking_config=types.ThinkingConfig(thinking_budget=0),
+                    max_output_tokens=2048,
+                    temperature=0.1,
+                    response_mime_type="application/json",
                 ),
             )
             return response.text or ""
         except Exception as e:
             err = str(e)
+            print(f"Gemini API Error with key {key[:10]}...: {err}")
             if "429" in err or "quota" in err.lower() or "RESOURCE_EXHAUSTED" in err:
-                time.sleep(2)
+                time.sleep(1)
                 continue
             raise e
 

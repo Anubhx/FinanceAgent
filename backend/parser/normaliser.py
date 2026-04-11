@@ -51,5 +51,5 @@ Text:
     try:
         cleaned = response.strip().replace("```json", "").replace("```", "")
         return json.loads(cleaned)
-    except:
+    except Exception:
         return []
