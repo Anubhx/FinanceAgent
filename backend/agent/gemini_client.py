@@ -41,9 +41,8 @@ def call_gemini(prompt: str) -> str:
                 model="gemini-flash-latest",
                 contents=prompt,
                 config=types.GenerateContentConfig(
-                    max_output_tokens=2048,
+                    max_output_tokens=4096,
                     temperature=0.1,
-                    response_mime_type="application/json",
                 ),
             )
             return response.text or ""

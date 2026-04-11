@@ -21,7 +21,7 @@ class AgentState(TypedDict):
     final_response: str
 
 # ── LLM ───────────────────────────────────────────────────────────────────────
-def get_gemini_llm(api_key_env: str = "GEMINI_API_KEY") -> ChatGoogleGenerativeAI:
+def get_gemini_llm(api_key_env: str = "GEMINI_API_KEY_1") -> ChatGoogleGenerativeAI:
     api_key = os.getenv(api_key_env)
     if not api_key:
         raise ValueError(f"Missing environment variable: {api_key_env}")
@@ -46,10 +46,7 @@ def plan_and_execute_node(state: AgentState) -> AgentState:
     Use Gemini to decide which tools to call, then execute them.
     This is a simple ReAct-style single-pass planner.
     """
-    llm = get_llm()
-    if not llm.google_api_key:
-        return {**state, "tool_results": ["Error: GEMINI_API_KEY_1 is missing."]}
-        
+    llm = get_gemini_llm()
     llm_with_tools = llm.bind_tools(tools)
     
     system_prompt = f"""You are a personal finance assistant with memory of past conversations.
