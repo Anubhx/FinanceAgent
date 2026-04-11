@@ -21,15 +21,17 @@ class AgentState(TypedDict):
     final_response: str
 
 # ── LLM ───────────────────────────────────────────────────────────────────────
+def get_gemini_llm(api_key_env: str = "GEMINI_API_KEY") -> ChatGoogleGenerativeAI:
+    api_key = os.getenv(api_key_env)
+    if not api_key:
+        raise ValueError(f"Missing environment variable: {api_key_env}")
 
-def get_llm():
     return ChatGoogleGenerativeAI(
-        model="gemini-2.5-flash-preview-04-17",
-        google_api_key=os.getenv("GEMINI_API_KEY_1"),
-        max_output_tokens=1024,
+        model="gemini-2.5-flash",
+        google_api_key=api_key,
+        max_tokens=1024,
         temperature=0.3,
     )
-
 tools = [get_spending_summary, detect_anomalies, generate_savings_plan, answer_finance_question]
 
 # ── Nodes ──────────────────────────────────────────────────────────────────────
