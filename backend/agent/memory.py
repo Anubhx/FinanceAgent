@@ -1,4 +1,12 @@
 import os
+from dotenv import load_dotenv
+
+# Ensure absolute path for .env loading
+current_dir = os.path.dirname(os.path.abspath(__file__))
+backend_dir = os.path.dirname(current_dir)
+env_path = os.path.join(backend_dir, ".env")
+load_dotenv(env_path)
+
 from mem0 import Memory
 
 # Configuration for Mem0 with Pinecone and Gemini
@@ -8,19 +16,19 @@ config = {
         "config": {
             "api_key": os.getenv("PINECONE_API_KEY"),
             "environment": os.getenv("PINECONE_ENV", "us-east-1"),
-            "index_name": os.getenv("PINECONE_INDEX_NAME", "finance-agent-memory"),
-            "dimension": 768,  # Gemini embedding dimension
+            "collection_name": os.getenv("PINECONE_INDEX_NAME", "finance-agent-memory"),
+            "embedding_model_dims": 768,  # Gemini embedding dimension
         },
     },
     "llm": {
-        "provider": "google",
+        "provider": "gemini",
         "config": {
-            "model": "gemini-1.5-flash", # Using 1.5-flash as 2.5 is not stable/available
+            "model": "gemini-flash-latest",
             "api_key": os.getenv("GEMINI_API_KEY_1"),
         },
     },
     "embedder": {
-        "provider": "google",
+        "provider": "gemini",
         "config": {
             "model": "models/embedding-001",
             "api_key": os.getenv("GEMINI_API_KEY_1"),

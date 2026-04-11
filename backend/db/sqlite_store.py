@@ -55,9 +55,11 @@ def upsert_user(user_id: str, email: str = ""):
 def store_transactions(user_id: str, transactions: list[dict], source: str):
     conn = get_conn()
     for t in transactions:
+        name_val = t.get("description") or t.get("name") or "Unknown Transaction"
+        amount_val = t.get("amount", 0)
         conn.execute(
             "INSERT INTO transactions (user_id, date, name, amount, category, source, created_at) VALUES (?, ?, ?, ?, ?, ?, ?)",
-            (user_id, t.get("date"), t.get("name"), t.get("amount"), t.get("category", "Other"), source, datetime.now().isoformat())
+            (user_id, t.get("date"), name_val, amount_val, t.get("category", "Other"), source, datetime.now().isoformat())
         )
     conn.commit()
     conn.close()

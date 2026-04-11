@@ -31,6 +31,7 @@ app.add_middleware(
 # Include routes
 app.include_router(chat_router, prefix="/api")
 app.include_router(upload_router, prefix="/api")
+app.include_router(transactions_router, prefix="/api")
 
 @app.get("/health")
 def health():

@@ -3,7 +3,7 @@ langchain-google-genai
 google-generativeai
 langgraph
 mem0ai
-pinecone-client
+pinecone
 pymupdf
 pikepdf
 pandas

@@ -1,4 +1,13 @@
 import os
+import random
+from dotenv import load_dotenv
+
+# Ensure absolute path for .env loading
+current_dir = os.path.dirname(os.path.abspath(__file__))
+backend_dir = os.path.dirname(current_dir)
+env_path = os.path.join(backend_dir, ".env")
+load_dotenv(env_path)
+
 from typing import TypedDict, Annotated
 from langgraph.graph import StateGraph, END
 from langchain_google_genai import ChatGoogleGenerativeAI
@@ -21,13 +30,20 @@ class AgentState(TypedDict):
     final_response: str
 
 # ── LLM ───────────────────────────────────────────────────────────────────────
-def get_gemini_llm(api_key_env: str = "GEMINI_API_KEY_1") -> ChatGoogleGenerativeAI:
-    api_key = os.getenv(api_key_env)
-    if not api_key:
-        raise ValueError(f"Missing environment variable: {api_key_env}")
+def get_gemini_llm() -> ChatGoogleGenerativeAI:
+    keys = [
+        os.getenv("GEMINI_API_KEY_1"),
+        os.getenv("GEMINI_API_KEY_2"),
+        os.getenv("GEMINI_API_KEY_3"),
+    ]
+    valid_keys = [k for k in keys if k]
+    if not valid_keys:
+        raise ValueError("No Gemini API keys found in environment variables.")
+        
+    api_key = random.choice(valid_keys)
 
     return ChatGoogleGenerativeAI(
-        model="gemini-2.5-flash",
+        model="gemini-flash-latest",
         google_api_key=api_key,
         max_tokens=1024,
         temperature=0.3,
