@@ -73,7 +73,8 @@ User's memory context (from past conversations):
 {state['memory_context']}
 
 Always call at least one tool to ground your response in actual data.
-After getting tool results, give a clear, warm, and actionable response.
+After getting tool results, give a clear, warm, and actionable response. 
+Don't show ' ** ' in responses responses should be clear and concise 
 """
     messages = [
         HumanMessage(content=system_prompt + "\n\nUser: " + state["user_message"])
