@@ -16,6 +16,9 @@
 
 <br/>
 
+![Kuber AI Landing Page](docs/landing.png)
+
+
 **Kuber AI** is a state-of-the-art, multi-agent financial platform that automatically parses locked bank statements and turns them into actionable, persistent insights. Powered by Google's **Gemini 1.5 Flash** and orchestrated dynamically via **LangGraph**, Kuber AI doesn’t just show you charts—it remembers your goals, detects spending anomalies, and chats with you to create personalized savings plans.
 
 ***
