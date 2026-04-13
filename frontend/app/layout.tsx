@@ -5,7 +5,7 @@ import { Inter } from "next/font/google";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "FinanceAgent — Your Personal Finance AI",
+  title: "Kuber AI — Your Personal Finance AI",
   description: "AI-powered agent for bank statement analysis and financial advice.",
 };
 
@@ -21,9 +21,9 @@ export default function RootLayout({
           <header className="fixed top-0 w-full z-50 bg-slate-950/80 backdrop-blur-md border-b border-white/10 px-6 py-4 flex items-center justify-between">
             <div className="flex items-center gap-2">
               <div className="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center font-bold text-white shadow-lg shadow-blue-500/20">
-                F
+                K
               </div>
-              <span className="text-xl font-bold tracking-tight">FinanceAgent</span>
+              <span className="text-xl font-bold tracking-tight">Kuber AI</span>
             </div>
             <nav className="flex items-center gap-6">
               <Show when="signed-in">

@@ -21,7 +21,7 @@ export default function HomePage() {
         </h1>
         
         <p className="text-lg text-slate-400 max-w-2xl mb-12 leading-relaxed">
-          FinanceAgent parses your password-protected bank statements, extracts every transaction, 
+          Kuber AI parses your password-protected bank statements, extracts every transaction, 
           and provides agentic advice tailored to your spending habits and financial goals.
         </p>
 

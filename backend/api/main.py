@@ -4,7 +4,7 @@ from api.routes.chat import router as chat_router
 from api.routes.upload import router as upload_router
 from api.routes.transactions import router as transactions_router
 
-app = FastAPI(title="FinanceAgent API")
+app = FastAPI(title="Kuber AI API")
 
 import os
 

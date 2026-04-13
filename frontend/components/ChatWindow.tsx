@@ -13,7 +13,7 @@ export default function ChatWindow() {
   const { userId } = useAuth();
   const { user } = useUser();
   const [messages, setMessages] = useState<Message[]>([
-    { role: "assistant", content: "Hi! I'm your FinanceAgent. Have you uploaded your bank statement yet? I can help you analyze your spending, detect anomalies, or create a savings plan." }
+    { role: "assistant", content: "Hi! I'm Kuber AI. Have you uploaded your bank statement yet? I can help you analyze your spending, detect anomalies, or create a savings plan." }
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -55,7 +55,7 @@ export default function ChatWindow() {
           🤖
         </div>
         <div>
-          <h3 className="font-bold">Finance Agent</h3>
+          <h3 className="font-bold">Kuber AI</h3>
           <p className="text-xs text-green-400 flex items-center gap-1">
             <span className="w-1.5 h-1.5 bg-green-400 rounded-full animate-pulse" />
             Online & Ready
